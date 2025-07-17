@@ -1,0 +1,17 @@
+{
+    "type": {
+        "./Pictures": [
+            ".jpg",
+            ".png",
+            ".webp",
+            ".gif"
+        ],
+        "./Documents": [
+            ".txt",
+            ".pdf",
+            ".doc",
+            ".docx"
+        ]
+    },
+    "time": {}
+}
