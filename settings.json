@@ -11,6 +11,10 @@
             ".pdf",
             ".doc",
             ".docx"
+        ],
+        "./Music": [
+            ".mp3",
+            ".opus"
         ]
     },
     "time": {}
