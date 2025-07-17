@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"flag"
 	"fmt"
 	"log"
@@ -30,6 +29,9 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	fmt.Println("Organizing", dirInfo.Name())
+
 	if len(files) == 0 {
 		fmt.Println("Done")
 		return
@@ -38,21 +40,7 @@ func main() {
 	if *isTime {
 		return
 	} else {
-		organizeByType()
+		organizeByType(dirInfo, files, s)
 	}
-
-}
-
-func readSettings(s *Settings) {
-	settings, err := os.ReadFile("./settings.json")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	if err := json.Unmarshal(settings, s); err != nil {
-		log.Fatal(err)
-	}
-}
-func organizeByType() {
 
 }
