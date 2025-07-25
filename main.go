@@ -7,7 +7,15 @@ import (
 	"os"
 )
 
-type Settings map[string]map[string][]string
+type Time struct {
+	SubfolderByType bool `json:"subfolderByType"`
+	Monthly         bool `json:"monthly"`
+}
+
+type Settings struct {
+	Type map[string][]string `json:"type"`
+	Time Time                `json:"time"`
+}
 
 func main() {
 	isTime := flag.Bool("time", false, "organize by date modified")
@@ -33,14 +41,14 @@ func main() {
 	fmt.Println("Organizing", dirInfo.Name())
 
 	if len(files) == 0 {
-		fmt.Println("Done")
+		fmt.Println("Empty dir")
 		return
 	}
 
 	if *isTime {
-		return
+		organizeByDate(dirInfo, files, s.Time)
 	} else {
-		organizeByType(dirInfo, files, s)
+		organizeByType(dirInfo, files, s.Type)
 	}
 
 }
