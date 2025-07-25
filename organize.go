@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 )
 
-func organizeByType(rootDir os.FileInfo, files []os.DirEntry, s Settings) {
+func organizeByType(rootDir os.FileInfo, files []os.DirEntry, s map[string][]string) {
 	folderLogs := make([]folderLog, 0, 100)
 
 	for _, entry := range files {
@@ -33,4 +33,8 @@ func organizeByType(rootDir os.FileInfo, files []os.DirEntry, s Settings) {
 		}
 	}
 	printFolderLogs(folderLogs)
+}
+
+func organizeByDate(rootDir os.FileInfo, files []os.DirEntry, s Time) {
+
 }
