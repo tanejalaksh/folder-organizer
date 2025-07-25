@@ -12,15 +12,15 @@ type folderLog struct {
 	count int
 }
 
-func checkFolderName(s Settings, ext string) string {
-	for f := range s["type"] {
-		for i := 0; i < len(s["type"][f]); i++ {
-			if ext == s["type"][f][i] {
+func checkFolderName(s map[string][]string, ext string) string {
+	for f := range s {
+		for i := 0; i < len(s[f]); i++ {
+			if ext == s[f][i] {
 				return f
 			}
 		}
 	}
-	return "undefined"
+	return "/undefined"
 }
 
 func readSettings(s *Settings) {
