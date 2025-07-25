@@ -17,5 +17,8 @@
             ".opus"
         ]
     },
-    "time": {}
+    "time": {
+        "subfolderByType": false,
+        "monthly": false
+    }
 }
