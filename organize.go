@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-func organizeByType(rootDir os.FileInfo, files []os.DirEntry, s map[string][]string) {
+func organizeByType(path string, files []os.DirEntry, s map[string][]string) []folderLog {
 	folderLogs := make([]folderLog, 0, 100)
 
 	for _, entry := range files {
@@ -15,9 +15,9 @@ func organizeByType(rootDir os.FileInfo, files []os.DirEntry, s map[string][]str
 			continue
 		}
 		folderName := checkFolderName(s, filepath.Ext(entry.Name()))
-		dir := rootDir.Name() + folderName
+		dir := path + folderName
 
-		oldPath := rootDir.Name() + "/" + entry.Name()
+		oldPath := path + "/" + entry.Name()
 		newPath := dir + "/" + entry.Name()
 
 		if err := os.MkdirAll(dir, os.ModePerm); err != nil {
@@ -33,10 +33,10 @@ func organizeByType(rootDir os.FileInfo, files []os.DirEntry, s map[string][]str
 			folderLogs = append(folderLogs, folderLog{folderName, 1})
 		}
 	}
-	printFolderLogs(folderLogs)
+	return folderLogs
 }
 
-func organizeByDate(rootDir os.FileInfo, files []os.DirEntry, s Time) {
+func organizeByDate(path string, files []os.DirEntry, monthly bool) {
 	folderLogs := make([]folderLog, 0, 100)
 	for _, entry := range files {
 		if entry.IsDir() {
@@ -50,15 +50,15 @@ func organizeByDate(rootDir os.FileInfo, files []os.DirEntry, s Time) {
 
 		var folderName string
 
-		if s.Monthly {
+		if monthly {
 			folderName = file.ModTime().Month().String() + " "
 		}
 
 		folderName += strconv.Itoa(file.ModTime().Year())
 
-		dir := rootDir.Name() + "/" + folderName
+		dir := path + "/" + folderName
 
-		oldPath := rootDir.Name() + "/" + entry.Name()
+		oldPath := path + "/" + entry.Name()
 		newPath := dir + "/" + entry.Name()
 
 		if err := os.MkdirAll(dir, os.ModePerm); err != nil {
