@@ -1,4 +1,5 @@
 {
+    "subfolderByMonth": true,
     "type": {
         "./Pictures": [
             ".jpg",
@@ -16,9 +17,5 @@
             ".mp3",
             ".opus"
         ]
-    },
-    "time": {
-        "subfolderByType": false,
-        "monthly": false
     }
 }
