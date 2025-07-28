@@ -11,6 +11,27 @@ type folderLog struct {
 	name  string
 	count int
 }
+type Settings struct {
+	Type               map[string][]string `json:"type"`
+	SubfolderByMonth   bool                `json:"subfolderByMonth"`
+	BypassOrganizeType bool                `json:"bypassOrganizeType"`
+}
+
+func initialize(dir string) ([]os.DirEntry, string) {
+	dirInfo, err := os.Stat(dir)
+	if err != nil || !dirInfo.IsDir() {
+		log.Fatal("System couldn't find directory")
+	}
+	path := dirInfo.Name()
+
+	files, err := os.ReadDir(path)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return files, path
+
+}
 
 func checkFolderName(s map[string][]string, ext string) string {
 	for f := range s {
