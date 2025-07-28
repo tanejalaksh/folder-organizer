@@ -1,6 +1,7 @@
 # folder-organizer v0.9
 
 organize a local folder in subfolders by type, date modified
+
 reads a user config settings.json file to specify operations at run time
 
 v0.9 -> ability to bypass organizeByType through settings.json
