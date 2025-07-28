@@ -7,11 +7,6 @@ import (
 	"os"
 )
 
-type Settings struct {
-	Type             map[string][]string `json:"type"`
-	SubfolderByMonth bool                `json:"subfolderByMonth"`
-}
-
 func main() {
 	isTime := flag.Bool("time", false, "organize by date modified")
 	flag.Parse()
@@ -20,19 +15,10 @@ func main() {
 		log.Fatal("Incorrect usage\nCorrect usage:\norganize <dir>\norganize --time <dir>")
 	}
 
-	dirInfo, err := os.Stat(flag.Arg(0))
-	if err != nil || !dirInfo.IsDir() {
-		log.Fatal("System couldn't find directory")
-	}
-
 	var s Settings
 	readSettings(&s)
-	path := dirInfo.Name()
 
-	files, err := os.ReadDir(path)
-	if err != nil {
-		log.Fatal(err)
-	}
+	files, path := initialize(flag.Arg(0))
 
 	fmt.Println("Organizing", path)
 
@@ -42,20 +28,24 @@ func main() {
 	}
 
 	if *isTime {
+		if s.BypassOrganizeType {
+			organizeByDate(path, files, s.SubfolderByMonth)
+		}
 		folderLogs := organizeByType(path, files, s.Type)
 		printFolderLogs(folderLogs)
 		for _, f := range folderLogs {
-			dir := dirInfo.Name() + "/" + f.name
+			dir := path + "/" + f.name
 			subFiles, err := os.ReadDir(dir)
 			if err != nil {
 				fmt.Println(err)
 			}
-			fmt.Println("organizing", f.name)
-			organizeByDate(dir, subFiles, s.SubfolderByMonth)
+			fmt.Println("Organizing", f.name)
+			folderLogs := organizeByDate(dir, subFiles, s.SubfolderByMonth)
+			printFolderLogs(folderLogs)
 		}
 
 	} else {
-		folderLogs := organizeByType(dirInfo.Name(), files, s.Type)
+		folderLogs := organizeByType(path, files, s.Type)
 		printFolderLogs(folderLogs)
 	}
 }
