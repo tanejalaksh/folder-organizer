@@ -1,4 +1,5 @@
 {
+    "bypassOrganizeType": false,
     "subfolderByMonth": true,
     "type": {
         "./Pictures": [
