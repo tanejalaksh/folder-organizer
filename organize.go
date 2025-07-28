@@ -36,7 +36,7 @@ func organizeByType(path string, files []os.DirEntry, s map[string][]string) []f
 	return folderLogs
 }
 
-func organizeByDate(path string, files []os.DirEntry, monthly bool) {
+func organizeByDate(path string, files []os.DirEntry, monthly bool) []folderLog {
 	folderLogs := make([]folderLog, 0, 100)
 	for _, entry := range files {
 		if entry.IsDir() {
@@ -75,5 +75,5 @@ func organizeByDate(path string, files []os.DirEntry, monthly bool) {
 		}
 	}
 
-	printFolderLogs(folderLogs)
+	return folderLogs
 }
